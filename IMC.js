@@ -1,35 +1,51 @@
+let inputPeso = document.getElementById("peso")
+let inputAltura = document.getElementById("altura")
 
-const calcular = document.getElementById('calcular');
+let resultado = document.getElementById("resultado")
 
-function imc () {
-const nome = document.getElementById('nome').value; // para buscar
-const altura = document.getElementById('altura').value;
-const peso = document.getElementById('peso').value;
-const resultado = document.getElementById('resultado');
 
-if(nome !== '' && altura !== '' && peso !==''){
-  
-  const valorIMC = (peso/(altura*altura)).toFixed(1);
- 
-  let classificacao = '';
-  if (valorIMC < 18.5){
-    classificacao = 'abaixo do peso.';
-      } else if (valorIMC < 25){
-        classificacao = 'com peso ideal. Meus Parabéns!';
-      } else if (valorIMC <30){
-        classificacao = 'Um pouco acima do peso! Comece a se cuidar!'
-      }else if (valorIMC < 35){
-        'Você está com Obesidade grau 1: Cuide-se'
-      }else if (valor<40){
-        classificacao = ' Você está com Obesidade Grau 2; Cuide-se Urgente!'
-      } else {classificacao = 'Você está com Obesidade Grau 3! Cuide Urgente da Saúde, vá ao médico!'}
+function calcular() {
 
-  resultado.textContent= `Olá ${nome} ! Seu IMC é ${valorIMC} e você está o ${classificacao}`;
+    let peso = inputPeso.value
+    let altura = inputAltura.value
 
-} else {
-  resultado.textContent = 'Preencha todos os campos!';
+    let imc = peso / (altura ** 2)
+
+    function classificacao() {
+
+        if (imc <= 18.5) {
+            return `Abaixo do peso`
+        } else if (18.5 <= imc && imc <= 24.9) {
+            return `Peso ideal`
+        } else if (25.0 <= imc && imc <= 29.9) {
+            return `Pré-obesidade`
+        } else if (30.0 <= imc && imc <= 34.9) {
+            return `Obesidade Grau 1`
+        } else if (35.0 <= imc && imc <= 39.9) {
+            return `Obesidade Grau 2`
+        } else {
+            return `Obesidade Grau 3`
+        }
+    }
+
+    function pesoIdeal() {
+
+        if (imc <= 18.5) {
+            return `Você precisa ganhar ${(18.5 * altura ** 2 - peso).toFixed(2)} quilos para seu peso ideal`
+        } else if (imc >= 24.9) {
+            return `Você precisa perder ${-(24.9 * altura ** 2 - peso).toFixed(2)} quilos para seu peso ideal`
+        } else {
+            return `Parabéns, você está no Peso Ideal!`
+        }
+    }
+
+
+    resultado.innerHTML = `<p> Seu IMC é ${imc.toFixed(2)}</p>`
+
+    resultado.innerHTML += `<p>${classificacao()}</p>`
+
+    resultado.innerHTML += `<p>${pesoIdeal()}</p>`
 }
-}
-calcular.addEventListener('click', imc);// comando para calcular ao clicar no botão a função
+
 
 
